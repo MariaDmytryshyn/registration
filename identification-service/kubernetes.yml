@@ -1,0 +1,47 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    run: identification-service
+  name: identification-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: identification-service
+  template:
+    metadata:
+      labels:
+        run: identification-service
+    spec:
+      containers:
+        - image: identification-service:v1.0.1
+          imagePullPolicy: IfNotPresent
+          name: identification-service
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    run: identification-service
+  name: identification-service
+spec:
+  ports:
+    - port: 8080
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    run: identification-service
+  type: NodePort
