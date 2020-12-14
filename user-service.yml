@@ -1,0 +1,13 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: user-service
+data:
+  application.yml: |-
+    age: 18
+    spring:
+        datasource: 
+            url: ${USER_SERVICE_DB_URL}
+            driverClassName: org.h2.Driver
+            username: ${USER_SERVICE_DB_USER}
+            password: ${USER_SERVICE_DB_PWD}
